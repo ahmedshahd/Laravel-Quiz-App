@@ -11,10 +11,8 @@ const QuizHeader: React.FC<QuizHeaderProps> = ({name, username, userId, created_
     return <><h1 className="text-2xl font-bold">{name}</h1>
         <p className="text-sm text-gray-500">
             Creator:{" "}
-            <a href={`/users/${userId}`} className="text-blue-500 hover:underline">
                 {username}
-            </a>{" "}
-            | Created Date: {new Date(created_at).toLocaleDateString()}
+            {" "}| Created Date: {new Date(created_at).toLocaleDateString()}
         </p></>;
 }
 

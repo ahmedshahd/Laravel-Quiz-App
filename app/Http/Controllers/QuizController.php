@@ -29,25 +29,17 @@ class QuizController extends Controller
         $score = Score::where('user_id', Auth::user()->id)->where('quiz_id', $id)->latest()->first();
         return Inertia::render('Quiz/Show', ['quiz' => $quiz, 'prevScore' => $score->score ?? null]);
     }
-    public function scores($id){
-        if(Gate::denies('registered-user'))
-            return redirect('/login');
-//        sort the scores
-        $scores = Quiz::find($id)->scores()->orderBy('score', 'desc')->get();
-        return response()->json(['scores' => $scores]);
-    }
+
     public function score(Request $request, $id){
 
         if(Gate::denies('registered-user'))
             return redirect('/login');
-//        validate
-        if($request->validate([
-            'selectedAnswers' => ['required', 'array', 'max:'.count($request->all()['selectedAnswers'])],
-            'selectedAnswers.*' => ['required', 'integer', 'min:0'],
+//        validate the request
+        if(!$request->validate([
+            'selectedAnswers' => ['required', 'array', 'max:'.count($request->all()['selectedAnswers'])]
         ])){
             return response()->json(['error' => 'Invalid request'], 400);
         };
-
         $quiz = Quiz::find($id);
         $selectedAnswers = $request->all()['selectedAnswers'];
         $score = 0;

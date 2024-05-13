@@ -22,5 +22,4 @@ Route::get('/quizzes/{page}', [QuizController::class, 'index']);
 Route::get('/quiz/create', [QuizController::class, 'create']);
 Route::get('/quiz/{id}', [QuizController::class, 'show']);
 Route::post('/quiz/{id}', [QuizController::class, 'score']);
-Route::get('/quiz/{id}/scores', [QuizController::class, 'scores']);
 Route::post('/quiz/create', [QuizController::class, 'store']);
