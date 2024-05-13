@@ -7,7 +7,7 @@ Features
 --------
 
 * User registration and login
-* Quiz creation and editing
+* Quiz creation
 * Quiz taking and scoring
 * User score display
 
