@@ -10,18 +10,22 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
-Route::group(['prefix' => 'register'], function () {
-    Route::get('', [AuthController::class, 'renderRegister']);
-    Route::post('', [AuthController::class, 'register']);
+
+Route::group(['prefix' => 'auth'], function () {
+
+    Route::group(['prefix' => 'register'], function () {
+        Route::get('', [AuthController::class, 'renderRegister']);
+        Route::post('', [AuthController::class, 'register']);
+    });
+
+    Route::group(['prefix' => 'login'], function () {
+        Route::get('', [AuthController::class, 'renderLogin']);
+        Route::post('', [AuthController::class, 'login']);
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::group(['prefix' => 'login'], function () {
-    Route::get('', [AuthController::class, 'renderLogin']);
-    Route::post('', [AuthController::class, 'login']);
-});
-
-
-Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/quizzes/{page}', [QuizController::class, 'index']);
 Route::get('/quiz/create', [QuizController::class, 'create']);
