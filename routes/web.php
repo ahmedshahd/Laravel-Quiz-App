@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
-use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -10,13 +10,18 @@ Route::get('/', function () {
     return Inertia::render('Welcome');
 });
 
+Route::group(['prefix' => 'register'], function () {
+    Route::get('', [AuthController::class, 'renderRegister']);
+    Route::post('', [AuthController::class, 'register']);
+});
 
-Route::get('/register', [RegisterUserController::class, 'create']);
-Route::post('/register', [RegisterUserController::class, 'store']);
+Route::group(['prefix' => 'login'], function () {
+    Route::get('', [AuthController::class, 'renderLogin']);
+    Route::post('', [AuthController::class, 'login']);
+});
 
-Route::get('/login', [SessionController::class, 'create']);
-Route::post('/login', [SessionController::class, 'store']);
-Route::post('/logout', [SessionController::class, 'destroy']);
+
+Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::get('/quizzes/{page}', [QuizController::class, 'index']);
 Route::get('/quiz/create', [QuizController::class, 'create']);
